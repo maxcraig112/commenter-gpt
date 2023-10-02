@@ -29,10 +29,17 @@ This extension primarily uses ChatGPT AI Langauge Model, therefore there may be 
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### 0.0.1
 
 Initial release of Commenter-GPT
 
+### 0.0.2
+
+Added logo to extension
+
+### 0.0.3
+
+Fixed Issue with API key being undefined
 ---
 
 

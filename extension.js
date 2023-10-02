@@ -52,7 +52,6 @@ function activate(context) {
             }
 			else{
                 vscode.window.showInformationMessage('No API Key Provided');
-
 			}
         });
     }));
@@ -61,7 +60,7 @@ function activate(context) {
         vscode.commands.registerCommand('extension.addDocstring', async () => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
-				if (retrieveUserData("APIKey",context) != ""){
+				if (retrieveUserData("APIKey",context) != undefined){
 					const selectedCode = editor.document.getText(editor.selection);
                 	const editBuilder = new vscode.WorkspaceEdit();
 					const newText = await runCompletion("Add docstrings to the following code provided, include a description, args, returns, don't include any explanations other than in the code in your response: " + selectedCode)
@@ -81,7 +80,7 @@ function activate(context) {
         vscode.commands.registerCommand('extension.addInlineComments', async () => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
-				if (retrieveUserData("APIKey",context) != ""){
+				if (retrieveUserData("APIKey",context) != undefined){
 					const selectedCode = editor.document.getText(editor.selection);
                 	const editBuilder = new vscode.WorkspaceEdit();
 					const newText = await runCompletion("Add inline comments to the following code provided, don't include any explanations other than in the code in your response: " + selectedCode)
@@ -101,7 +100,7 @@ function activate(context) {
         vscode.commands.registerCommand('extension.addInlineandDocstring', async () => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
-				if (retrieveUserData("APIKey",context) != ""){
+				if (retrieveUserData("APIKey",context) != undefined){
 					const selectedCode = editor.document.getText(editor.selection);
                 	const editBuilder = new vscode.WorkspaceEdit();
 					const newText = await runCompletion("Add docstrings and inline comments to the following code provided, include a description, args, returns in the docstrings. don't include any explanations other than in the code in your response: " + selectedCode)
@@ -117,20 +116,6 @@ function activate(context) {
         })
     );
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	// let disposable = vscode.commands.registerCommand('commenter-gpt.addAPIKey', function () {
-	// 	// The code you place here will be executed every time your command is executed
-
-	// 	// Display a message box to the user
-	// 	const apiKeyInput = vscode.window.showInputBox({
-	// 		prompt: 'Enter your API key:',
-	// 		placeHolder: 'API Key',
-	// 	});
-
-		
-	// });
 }
 
 // This method is called when your extension is deactivated

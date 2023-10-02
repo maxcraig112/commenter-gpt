@@ -1,9 +1,11 @@
 {
-  "name": "commenter-gpt",
+  "name": "Commenter-gpt",
   "displayName": "Commenter GPT",
   "description": "Allows you to provide a chatGPT API key so that it can automatically provide commenting for your functions",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "repository": "https://github.com/maxcraig112/Vscode-Commenter-GPT",
+  "publisher": "Jumpingeal",
+  "icon": "logo.png",
   "engines": {
     "vscode": "^1.82.0"
   },
