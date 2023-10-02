@@ -1,0 +1,54 @@
+{
+  "name": "commenter-gpt",
+  "displayName": "Commenter GPT",
+  "description": "Allows you to provide a chatGPT API key so that it can automatically provide commenting for your functions",
+  "version": "0.0.1",
+  "repository": "https://github.com/maxcraig112/Vscode-Commenter-GPT",
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "commenter-gpt.addAPIKey",
+        "title": "Add API Key"
+      },
+      {
+        "command": "extension.addDocstring",
+        "title": "Add Docstring"
+      },
+      {
+        "command": "extension.addInlineComments",
+        "title": "Add Inline Comments"
+      },
+      {
+        "command": "extension.addInlineandDocstrings",
+        "title": "Add Inline Comments and Docstrings"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.2",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.82.0",
+    "@vscode/test-electron": "^2.3.4",
+    "eslint": "^8.50.0",
+    "glob": "^10.3.3",
+    "mocha": "^10.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "openai": "file:openai-4.11.0.tgz"
+  }
+}
