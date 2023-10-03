@@ -1,8 +1,8 @@
 {
   "name": "Comment-GPT",
   "displayName": "Comment GPT",
-  "description": "Allows you to provide a chatGPT API key so that it can automatically provide commenting for your functions",
-  "version": "0.0.5",
+  "description": "Utilise ChatGPT to instantly add comments and docstrings to your programs!",
+  "version": "0.0.6",
   "repository": "https://github.com/maxcraig112/Vscode-Commenter-GPT",
   "publisher": "Jumpingeal",
   "icon": "logo.png",

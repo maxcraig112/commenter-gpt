@@ -31,13 +31,13 @@ Users appreciate release notes as you update your extension.
 
 ### 0.0.1
 
-Initial release of Commenter-GPT
+Initial release of Comment-GPT
 
 ### 0.0.2
 
 Added logo to extension
 
-### 0.0.5
+### 0.0.6
 
 - Fixed max token limit for API call
 - Renamed aspects of the extension and command IDs
