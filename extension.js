@@ -13,104 +13,100 @@ const { OpenAI } = require("openai");
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	async function runCompletion (prompt) {
-		const api = new OpenAI({
-			apiKey: retrieveUserData("APIKey",context)
-		});
-		
-		const completion = await api.chat.completions.create({
-		model: "gpt-3.5-turbo",
-		messages: [{"role": "user", "content": prompt}],
-		max_tokens:2000
-	});
-    return completion.choices[0].message.content;
-}
+    async function runCompletion(prompt) {
+        const api = new OpenAI({
+            apiKey: retrieveUserData("APIKey", context)
+        });
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "commenter-gpt" is now active!');
+        const completion = await api.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [{ "role": "user", "content": prompt }],
+            max_tokens: 2000
+        });
+        return completion.choices[0].message.content;
+    }
 
-	function saveUserData(key, value, context) {
-		const userData = { ...(context.globalState.get('userData') || {}), [key]: value };
-		context.globalState.update('userData', userData);
-	}
-	
-	function retrieveUserData(key, context) {
-		const userData = context.globalState.get('userData') || {};
-		return key ? userData[key] : userData;
-	}
+    // Use the console to output diagnostic information (console.log) and errors (console.error)
+    // This line of code will only be executed once when your extension is activated
+    console.log('Congratulations, your extension "commenter-gpt" is now active!');
 
-	context.subscriptions.push(vscode.commands.registerCommand('commenter-gpt.addAPIKey', () => {
+    function saveUserData(key, value, context) {
+        const userData = {...(context.globalState.get('userData') || {}), [key]: value };
+        context.globalState.update('userData', userData);
+    }
+
+    function retrieveUserData(key, context) {
+        const userData = context.globalState.get('userData') || {};
+        return key ? userData[key] : userData;
+    }
+
+    context.subscriptions.push(vscode.commands.registerCommand('Comment-GPT.addAPIKey', () => {
         vscode.window.showInputBox({
             prompt: 'Enter your API key:',
             placeHolder: `${retrieveUserData("APIKey",context)}`,
         }).then(apiKey => {
             if (apiKey) {
-				saveUserData("APIKey",apiKey,context)
+                saveUserData("APIKey", apiKey, context)
                 vscode.window.showInformationMessage(`API Key ${retrieveUserData("APIKey",context)} has been stored.`);
-            }
-			else{
+            } else {
                 vscode.window.showInformationMessage('No API Key Provided');
-			}
+            }
         });
     }));
 
-	context.subscriptions.push(
-        vscode.commands.registerCommand('comment-gpt.addDocstring', async () => {
+    context.subscriptions.push(
+        vscode.commands.registerCommand('Comment-GPT.addDocstring', async() => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
-				if (retrieveUserData("APIKey",context) != undefined){
-					const selectedCode = editor.document.getText(editor.selection);
-                	const editBuilder = new vscode.WorkspaceEdit();
-					const newText = await runCompletion("Add docstrings to the following code provided, include a description, args, returns, don't include any explanations other than in the code in your response: " + selectedCode)
-                	editBuilder.replace(editor.document.uri, editor.selection,newText.replace(/^```python\s*/, '').replace(/\s*```$/, ''));
+                if (retrieveUserData("APIKey", context) != undefined) {
+                    const selectedCode = editor.document.getText(editor.selection);
+                    const editBuilder = new vscode.WorkspaceEdit();
+                    const newText = await runCompletion("Add docstrings to the following code provided, include a description, args, returns, don't include any explanations other than in the code in your response: " + selectedCode)
+                    editBuilder.replace(editor.document.uri, editor.selection, newText.replace(/^```python\s*/, '').replace(/\s*```$/, ''));
 
-                	// Apply the edit to the editor
-                	vscode.workspace.applyEdit(editBuilder);
-				}
-				else{
-					vscode.window.showErrorMessage("API Key not provided");
-				}
+                    // Apply the edit to the editor
+                    vscode.workspace.applyEdit(editBuilder);
+                } else {
+                    vscode.window.showErrorMessage("API Key not provided");
+                }
             }
         })
     );
 
-	context.subscriptions.push(
-        vscode.commands.registerCommand('comment-gpt.addInlineComments', async () => {
+    context.subscriptions.push(
+        vscode.commands.registerCommand('Comment-GPT.addInlineComments', async() => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
-				if (retrieveUserData("APIKey",context) != undefined){
-					const selectedCode = editor.document.getText(editor.selection);
-                	const editBuilder = new vscode.WorkspaceEdit();
-					const newText = await runCompletion("Add inline comments to the following code provided, don't include any explanations other than in the code in your response: " + selectedCode)
-                	editBuilder.replace(editor.document.uri, editor.selection,newText.replace(/^```python\s*/, '').replace(/\s*```$/, ''));
+                if (retrieveUserData("APIKey", context) != undefined) {
+                    const selectedCode = editor.document.getText(editor.selection);
+                    const editBuilder = new vscode.WorkspaceEdit();
+                    const newText = await runCompletion("Add inline comments to the following code provided, don't include any explanations other than in the code in your response: " + selectedCode)
+                    editBuilder.replace(editor.document.uri, editor.selection, newText.replace(/^```python\s*/, '').replace(/\s*```$/, ''));
 
-                	// Apply the edit to the editor
-                	vscode.workspace.applyEdit(editBuilder);
-				}
-				else{
-					vscode.window.showErrorMessage("API Key not provided");
-				}
+                    // Apply the edit to the editor
+                    vscode.workspace.applyEdit(editBuilder);
+                } else {
+                    vscode.window.showErrorMessage("API Key not provided");
+                }
             }
         })
     );
 
-	context.subscriptions.push(
-        vscode.commands.registerCommand('comment-gpt.addInlineandDocstring', async () => {
+    context.subscriptions.push(
+        vscode.commands.registerCommand('Comment-GPT.addInlineandDocstring', async() => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
-				if (retrieveUserData("APIKey",context) != undefined){
-					const selectedCode = editor.document.getText(editor.selection);
-                	const editBuilder = new vscode.WorkspaceEdit();
-					const newText = await runCompletion("Add docstrings and inline comments to the following code provided, include a description, args, returns in the docstrings. don't include any explanations other than in the code in your response: " + selectedCode)
-                	editBuilder.replace(editor.document.uri, editor.selection,newText.replace(/^```python\s*/, '').replace(/\s*```$/, ''));
+                if (retrieveUserData("APIKey", context) != undefined) {
+                    const selectedCode = editor.document.getText(editor.selection);
+                    const editBuilder = new vscode.WorkspaceEdit();
+                    const newText = await runCompletion("Add docstrings and inline comments to the following code provided, include a description, args, returns in the docstrings. don't include any explanations other than in the code in your response: " + selectedCode)
+                    editBuilder.replace(editor.document.uri, editor.selection, newText.replace(/^```python\s*/, '').replace(/\s*```$/, ''));
 
-                	// Apply the edit to the editor
-                	vscode.workspace.applyEdit(editBuilder);
-				}
-				else{
-					vscode.window.showErrorMessage("API Key not provided");
-				}
+                    // Apply the edit to the editor
+                    vscode.workspace.applyEdit(editBuilder);
+                } else {
+                    vscode.window.showErrorMessage("API Key not provided");
+                }
             }
         })
     );
@@ -121,6 +117,6 @@ function activate(context) {
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
+    activate,
+    deactivate
 }
