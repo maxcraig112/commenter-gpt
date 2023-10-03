@@ -1,4 +1,4 @@
-# commenter-gpt README
+# comment-gpt README
 
 This Extension interfaces with chatgpt to allow you to easily add inline comments, docstrings, or both to your functions.
 
@@ -37,9 +37,11 @@ Initial release of Commenter-GPT
 
 Added logo to extension
 
-### 0.0.3
+### 0.0.5
 
-Fixed Issue with API key being undefined
+- Fixed max token limit for API call
+- Renamed aspects of the extension and command IDs
+
 ---
 
 

@@ -21,9 +21,8 @@ function activate(context) {
 		const completion = await api.chat.completions.create({
 		model: "gpt-3.5-turbo",
 		messages: [{"role": "user", "content": prompt}],
-		max_tokens:4000
+		max_tokens:2000
 	});
-	//console.log(completion);
     return completion.choices[0].message.content;
 }
 
@@ -57,7 +56,7 @@ function activate(context) {
     }));
 
 	context.subscriptions.push(
-        vscode.commands.registerCommand('extension.addDocstring', async () => {
+        vscode.commands.registerCommand('comment-gpt.addDocstring', async () => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
 				if (retrieveUserData("APIKey",context) != undefined){
@@ -77,7 +76,7 @@ function activate(context) {
     );
 
 	context.subscriptions.push(
-        vscode.commands.registerCommand('extension.addInlineComments', async () => {
+        vscode.commands.registerCommand('comment-gpt.addInlineComments', async () => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
 				if (retrieveUserData("APIKey",context) != undefined){
@@ -97,7 +96,7 @@ function activate(context) {
     );
 
 	context.subscriptions.push(
-        vscode.commands.registerCommand('extension.addInlineandDocstring', async () => {
+        vscode.commands.registerCommand('comment-gpt.addInlineandDocstring', async () => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
 				if (retrieveUserData("APIKey",context) != undefined){
